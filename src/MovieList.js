@@ -3,8 +3,8 @@ import './MovieList.css';
 
 function MovieList() {
   const [movies, setMovies] = useState([]);
-  const [titleOrder, setTitleOrder] = useState('asc');
-  const [yearOrder, setYearOrder] = useState('asc');
+  const [titleOrder, setTitleOrder] = useState('');
+  const [yearOrder, setYearOrder] = useState('');
 
   const toggleTitleOrder = () =>
     setTitleOrder(titleOrder === 'asc' ? 'dsc' : 'asc');
@@ -35,9 +35,19 @@ function MovieList() {
       .catch();
   }, []);
 
-  useEffect(() => sort('name'), [titleOrder]);
+  useEffect(
+    () => {
+      if (titleOrder) sort('name');
+    },
+    [titleOrder],
+  );
 
-  useEffect(() => sort('year'), [yearOrder]);
+  useEffect(
+    () => {
+      if (yearOrder) sort('year');
+    },
+    [yearOrder],
+  );
 
   return (
     <div>
