@@ -14,18 +14,19 @@ function MovieList() {
 
   const sort = para => {
     if (para === 'name') {
-      movies.sort((a, b) =>
+      const newMovies = [...movies].sort((a, b) =>
         titleOrder === 'asc'
           ? b.Title.charCodeAt(0) - a.Title.charCodeAt(0)
           : a.Title.charCodeAt(0) - b.Title.charCodeAt(0),
       );
+      setMovies(newMovies);
     }
     if (para === 'year') {
-      movies.sort((a, b) =>
+      const newMovies = [...movies].sort((a, b) =>
         yearOrder === 'asc' ? b.Year - a.Year : a.Year - b.Year,
       );
+      setMovies(newMovies);
     }
-    setMovies(movies);
   };
 
   useEffect(() => {
