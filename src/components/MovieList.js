@@ -3,22 +3,27 @@ import './MovieList.css';
 
 function MovieList() {
   const [movies, setMovies] = useState([]);
-  const [titleOrder, setTitleOrder] = useState('');
-  const [yearOrder, setYearOrder] = useState('');
-  const [sortKey, setSortKey] = useState('');
+  const [sortRule, setSortRule] = useState({
+    key: '',
+    titleOrder: '',
+    yearOrder: '',
+  });
 
-  const toggleTitleOrder = () => {
-    setTitleOrder(titleOrder === 'asc' ? 'dsc' : 'asc');
-    setSortKey('title');
-  };
+  const toggleTitleOrder = () =>
+    setSortRule({
+      key: 'title',
+      titleOrder: sortRule.titleOrder === 'asc' ? 'dsc' : 'asc',
+    });
 
-  const toggleYearOrder = () => {
-    setYearOrder(yearOrder === 'asc' ? 'dsc' : 'asc');
-    setSortKey('year');
-  };
+  const toggleYearOrder = () =>
+    setSortRule({
+      key: 'year',
+      yearOrder: sortRule.yearOrder === 'asc' ? 'dsc' : 'asc',
+    });
 
   const sort = () => {
-    if (sortKey === 'title') {
+    const { key, titleOrder, yearOrder } = sortRule;
+    if (key === 'title') {
       const newMovies = [...movies].sort((a, b) =>
         titleOrder === 'asc'
           ? a.Title.charCodeAt(0) - b.Title.charCodeAt(0)
@@ -26,7 +31,7 @@ function MovieList() {
       );
       setMovies(newMovies);
     }
-    if (sortKey === 'year') {
+    if (key === 'year') {
       const newMovies = [...movies].sort((a, b) =>
         yearOrder === 'asc' ? a.Year - b.Year : b.Year - a.Year,
       );
@@ -41,7 +46,7 @@ function MovieList() {
       .catch();
   }, []);
 
-  useEffect(() => sort(), [sortKey, titleOrder, yearOrder]);
+  useEffect(() => sort(), [sortRule]);
 
   return (
     <div>
